@@ -3,7 +3,7 @@
     let list = [];
 
 
-    const response = await fetch("/api/", {
+    const response = await fetch("/api/product/", {
         method: "GET",
         headers: { "Accept": "application/json" }
     });
@@ -27,8 +27,8 @@
 
 
     async function click_delete(event) {
-        const response = await fetch(`/api/delete/${event.target.id}`,{
-            method: "POST",
+        const response = await fetch(`/api/product/${event.target.id}`,{
+            method: "DELETE",
             headers: { "Accept": "application/json" }
         });
 
@@ -40,8 +40,8 @@
 
 
     async function click_update(event) {
-        const response = await fetch(`/api/update/${event.target.id}`,{
-            method: "POST",
+        const response = await fetch(`/api/product/${event.target.id}`,{
+            method: "PUT",
             headers: { "Accept": "application/json" }
         });
 
