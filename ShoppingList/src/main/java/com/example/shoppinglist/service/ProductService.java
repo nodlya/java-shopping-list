@@ -5,16 +5,22 @@ import com.example.shoppinglist.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public void save(String title) {
+    public Product save(String title) {
         Product product = new Product(title);
-        productRepository.save(product);
+        try {
+            productRepository.save(product);
+        }
+        catch (Exception e){ return null;}
+        return product;
     }
 
     public void update(Long id, String title, boolean isBought) {
@@ -23,13 +29,22 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void delete(Long id) {
+    public int delete(Long id) {
         var product = productRepository.findById(id).get();
-        productRepository.delete(product);
+        try {
+            productRepository.delete(product);
+        }
+        catch (Exception e){return -1;}
+        return 0;
     }
 
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
+    }
+
+    public String findByName(String name) {
+        List<Product> t = (List<Product>) findAllProducts();
+        return t.stream().filter(s -> s.getName() == name).collect(Collectors.toList()).get(0).getName();
     }
 
     public Iterable<Product> findAllProducts() {
